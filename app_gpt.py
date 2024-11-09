@@ -19,14 +19,23 @@ os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 os.environ["TAVILY_API_KEY"] = os.getenv("TAVILY_API_KEY")
 
 # Initialize the search tool and LLM
-search = TavilySearchResults(max_results=8)
+search = TavilySearchResults(max_results=2)
 tools = [search]
-llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0) # use either gpt-3.5-turbo or gpt-4o
+llm = ChatOpenAI(model="gpt-4o", temperature=0) # use either gpt-3.5-turbo or gpt-4o
 prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "You are an agent that when given a location and a bunch of different recycling goods, you will find the closest recycling station based on that location and then give the user a price estimate of how much they can make from the recycling. Moreover, the user will give you their car type. Figure out how much gas/electricity it takes and subtract that from the total amount they can make. You have access to the tavily api to search the web! ",
+            "You are an agent that when given a location and a bunch of \
+            different recycling goods, you will find the closest recycling \
+            station based on that location and then give the user a price \
+            estimate (give a final value) of how much they can make from the \
+            recycling. Moreover, the user will give you their car type. \
+            Figure out how much gas/electricity, by searching for the distance \
+            and gas mileage it takes and subtract that from the total amount \
+            they can make. You have access to the tavily api to search the web, make sure to crosscheck your sources for the prices! \
+            After the calculations, can you write the answer after your logic in 1 line as such: \
+            'The closest recycling plant is [location]. The amount you will make is [amount]'",
         ),
         ("user", "{input}"),
         MessagesPlaceholder(variable_name="agent_scratchpad"),
