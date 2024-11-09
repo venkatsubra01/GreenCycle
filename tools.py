@@ -8,7 +8,7 @@ import os
 from dotenv import load_dotenv
 
 #region keys
-load_dotenv("keys.env")
+load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY") 
 GOOGLE_CSE_ID = os.getenv("GOOGLE_CSE_ID") 
 ALPHAVANTAGE_API_KEY = os.getenv("ALPHAVANTAGE_API_KEY") 
