@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoRecycle - Recycling Made Easy</title>
+    <link href="mainPage.css" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <h1>[NAME]</h1>
+    </header>
+    
+    <div class="container">
+        <section class="hero">
+            <h2>Recycling Made Easy</h2>
+            <p>Join us in making the world a cleaner place, one recycled item at a time.</p>
+            <a href="login.html" class="cta-button">Get Started</a>
+        </section>
+        <section class="features">
+            <div class="feature">
+                <h3>Easy Collection</h3>
+                <p>We pick up your recyclables right from your doorstep.</p>
+            </div>
+            <div class="feature">
+                <h3>Eco-Friendly</h3>
+                <p>Our processes are designed to minimize environmental impact.</p>
+            </div>
+            <div class="feature">
+                <h3>Rewards Program</h3>
+                <p>Earn points for your recycling efforts and redeem them for eco-friendly products.</p>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2024 EcoRecycle. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const nav = document.querySelector('nav');
+            const header = document.querySelector('header');
+
+            header.addEventListener('click', function() {
+                nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
+</body>
+</html>
