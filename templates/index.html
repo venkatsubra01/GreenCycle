@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoRecycle - Recycling Made Easy</title>
-    <link href="mainPage.css" rel="stylesheet">
+    <title>GreenCycle - Recycling Made Easy</title>
+    <link href="{{ url_for('static', filename='mainPage.css') }}" rel="stylesheet">
 
 </head>
 <body>
     <header>
-        <h1>[NAME]</h1>
+        <h1>GreenCycle</h1>
     </header>
     
     <div class="container">
         <section class="hero">
             <h2>Recycling Made Easy</h2>
             <p>Join us in making the world a cleaner place, one recycled item at a time.</p>
-            <a href="login.html" class="cta-button">Login</a>
-            <a href="form.html" class="cta-button">Recycling Calculator</a>
+            <a href="{{ url_for('login')}}" class="cta-button">Login</a>
+            <a href="{{ url_for('recycling_calculator') }}" class="cta-button">Recycling Calculator</a>
         </section>
         <section class="features">
             <div class="feature">
