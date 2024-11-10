@@ -43,6 +43,7 @@ Our app addresses common challenges in recycling:
 - Integrated a **LangChain agent** powered by a Large Language Model (LLM) for:
   - Answer retrieval.
   - Item recyclability validation.
+  - Integrated LangChain agent with web using Tavily API.
 
 ### Demo:
 - Created using **Figma** for showcasing app functionality.
