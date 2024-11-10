@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, render_template
 from flask_cors import CORS
 import os
 from dotenv import load_dotenv
@@ -28,16 +28,7 @@ prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "You are an agent that when given a location and a bunch of \
-            different recycling goods, you will find the closest recycling \
-            station based on that location and then give the user a price \
-            estimate (give a final value) of how much they can make from the \
-            recycling. Moreover, the user will give you their car type. \
-            Figure out how much gas/electricity, by searching for the distance \
-            and gas mileage (from the region where the user is from) it takes and subtract that from the total amount \
-            they can make. You have access to the tavily api to search the web, make sure to crosscheck your sources for the prices! \
-            After the calculations, can you write the answer after your logic in 1 line as such: \
-            'The closest recycling plant is [location]. The amount you will make is [amount]'",
+            "You are an agent that, when given a location, list of recyclables, and car make/model, will find the closest recycling station and calculate the net amount the user will make. Subtract the estimated travel cost based on the car’s fuel/electricity consumption. You have access to the Tavily API to search the web, so crosscheck prices where possible. Your response must follow this exact format and contain no other information: 'The closest recycling plant is [location]. The amount you will make is [amount]'",
         ),
         ("user", "{input}"),
         MessagesPlaceholder(variable_name="agent_scratchpad"),
@@ -46,40 +37,37 @@ prompt = ChatPromptTemplate.from_messages(
 agent = create_tool_calling_agent(llm, tools, prompt)
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
-@app.route('/query', methods=['POST'])
-def run_query():
-    data = request.json
-    if not data:
-        return jsonify({"error": "No data received"}), 400
+# Route to render the form
+@app.route('/')
+def form():
+    return render_template('form.html')
 
-    location = data.get("location")
-    recycling_amount = data.get("recycling_amount")
-    car_make_model = data.get("car_make_model")
-    query = f"Location: {location}, Recycling Amount: {recycling_amount}, Car: {car_make_model}"
+@app.route('/submit-form', methods=['GET', 'POST'])
+def home():
+    if request.method == 'POST':
+        location = request.form.get("location")
+        recycling_amount = request.form.get("recyclables")
+        car_make_model = request.form.get("car_make_model")
+        query = f"Location: {location}, Recycling Amount: {recycling_amount}, Car: {car_make_model}"
 
-    response = agent_executor({"input": query})
-    output_text = response.get('output', 'No result available')
+    try:
+        response = agent_executor({"input": query})
+        output_text = response.get('output', 'No result available')
+    except Exception as e:
+        output_text = f"Error during agent execution: {e}"
+        
+    
+    # Parse the output for location and amount
+    closest_location = ""
+    amount = ""
 
-    return jsonify({
-        "location": location,
-        "amount": output_text
-    })
+    if "The closest recycling plant is" in output_text and "The amount you will make is" in output_text:
+        parts = output_text.split("The amount you will make is")
+        closest_location = parts[0].replace("The closest recycling plant is", "").strip()
+        amount = parts[1].strip()
 
-# Endpoint to handle form submission
-@app.route('/submit', methods=['POST'])
-def submit():
-    # Collect form data
-    name = request.form.get('name')
-    location = request.form.get('location')
-    recyclables = request.form.get('recyclables')
-    make = request.form.get('make')
+     # Render result template with the output
+    return render_template('result.html', location=closest_location, amount=amount)
 
-    # Create a dictionary to store data
-    form_data = {
-        "name": name,
-        "location": location,
-        "recyclables": recyclables,
-        "make": make
-    }
-
-    print(form_data)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=4000)
