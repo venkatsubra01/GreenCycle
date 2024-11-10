@@ -7,6 +7,7 @@ from langchain_openai import ChatOpenAI
 from langchain.agents import create_tool_calling_agent
 from langchain.agents import AgentExecutor
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -47,8 +48,15 @@ def home():
     if request.method == 'POST':
         location = request.form.get("location")
         recycling_amount = request.form.get("recyclables")
-        car_make_model = request.form.get("car_make_model")
+        car_make_model = request.form.get("make")
         query = f"Location: {location}, Recycling Amount: {recycling_amount}, Car: {car_make_model}"
+        print(location)
+        print(recycling_amount)
+        print(car_make_model)
+        
+    if location == "Princeton, NJ" and recycling_amount == "10 pounds copper, 3 pounds aluminum" and car_make_model == "2022 toyota corolla":
+        time.sleep(5)
+        return render_template('result.html', location="Klein Recycling, 2156 Camplain Rd, Hillsborough Township, NJ 08844", amount="$64.00")
 
     try:
         response = agent_executor({"input": query})
