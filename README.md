@@ -50,7 +50,7 @@ Our app addresses common challenges in recycling:
 ---
 
 ## 💡 **Demo**
-Check out our demo on [Figma](https://www.figma.com/). (Include a link if available!)
+Check out our demo on [Figma](https://www.figma.com/). Here is our demo website: [https://hackprinceton24.onrender.com/](url)
 
 ---
 
