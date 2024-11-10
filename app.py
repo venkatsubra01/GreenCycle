@@ -64,3 +64,22 @@ def run_query():
         "location": location,
         "amount": output_text
     })
+
+# Endpoint to handle form submission
+@app.route('/submit', methods=['POST'])
+def submit():
+    # Collect form data
+    name = request.form.get('name')
+    location = request.form.get('location')
+    recyclables = request.form.get('recyclables')
+    make = request.form.get('make')
+
+    # Create a dictionary to store data
+    form_data = {
+        "name": name,
+        "location": location,
+        "recyclables": recyclables,
+        "make": make
+    }
+
+    print(form_data)
