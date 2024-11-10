@@ -1,7 +1,7 @@
 Flask
 flask-cors
 python-dotenv
-langchain-community-tools
+langchain-community
 langchain-openai
 langchain-agents
 langchain-core
