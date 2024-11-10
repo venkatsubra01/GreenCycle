@@ -32,7 +32,7 @@ prompt = ChatPromptTemplate.from_messages(
             estimate (give a final value) of how much they can make from the \
             recycling. Moreover, the user will give you their car type. \
             Figure out how much gas/electricity, by searching for the distance \
-            and gas mileage it takes and subtract that from the total amount \
+            and gas mileage (from the region where the user is from) it takes and subtract that from the total amount \
             they can make. You have access to the tavily api to search the web, make sure to crosscheck your sources for the prices! \
             After the calculations, can you write the answer after your logic in 1 line as such: \
             'The closest recycling plant is [location]. The amount you will make is [amount]'",
