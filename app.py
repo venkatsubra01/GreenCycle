@@ -24,7 +24,7 @@ os.environ["TAVILY_API_KEY"] = os.getenv("TAVILY_API_KEY")
 # Initialize the search tool and LLM
 search = TavilySearchResults(max_results=2)
 tools = [search]
-llm = ChatOpenAI(model="gpt-4o", temperature=0) # use either gpt-3.5-turbo or gpt-4o
+llm = ChatOpenAI(model="gpt-4o", temperature=0)
 prompt = ChatPromptTemplate.from_messages(
     [
         (
